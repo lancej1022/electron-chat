@@ -1,0 +1,11 @@
+/coverage
+/dist
+/node_modules
+/storybook-static
+/scripts
+/config
+/cypress
+/tests
+/public/*
+package.json
+package-lock.json

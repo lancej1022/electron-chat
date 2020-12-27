@@ -1,0 +1,37 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+# dependencies
+node_modules
+
+# we use packages lock file only for 'yarn'
+# package-lock.json
+
+# testing
+/coverage
+.coverage
+.coveragerc
+.pytest_cache/
+coverage.xml
+cypress/videos/
+cypress/screenshots/
+# production
+/dist
+
+# misc
+.DS_Store
+.cache
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.vagrant
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# user specific
+.vscode/
+.idea/
+__Design/
+*~
