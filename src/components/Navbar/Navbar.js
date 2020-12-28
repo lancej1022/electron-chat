@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export const Navbar = () => {
   const history = useHistory();
-  history.goBack();
+  const message = useSelector((state) => state.message);
 
   return (
     <div className="chat-navbar">
