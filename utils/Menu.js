@@ -17,7 +17,35 @@ exports.createTemplate = (app) => {
         {
           label: 'Undo',
           accelerator: 'CmdOrCtrl+Z',
-          role: 'undo', // roles provide predefined behavior provided by Electron
+          selector: 'undo:', // roles provide predefined behavior provided by Electron
+        },
+        {
+          label: 'Redo',
+          accelerator: 'Shift+CmdOrCtrl+Z',
+          selector: 'redo:', // roles provide predefined behavior provided by Electron
+        },
+        {
+          type: 'separator',
+        },
+        {
+          label: 'Cut',
+          accelerator: 'CmdOrCtrl+X',
+          selector: 'cut:', // roles provide predefined behavior provided by Electron
+        },
+        {
+          label: 'Copy',
+          accelerator: 'CmdOrCtrl+C',
+          selector: 'copy:', // roles provide predefined behavior provided by Electron
+        },
+        {
+          label: 'Paste',
+          accelerator: 'CmdOrCtrl+V',
+          selector: 'paste:', // roles provide predefined behavior provided by Electron
+        },
+        {
+          label: 'Select All',
+          accelerator: 'CmdOrCtrl+A',
+          selector: 'selectAll:', // roles provide predefined behavior provided by Electron
         },
       ],
     },

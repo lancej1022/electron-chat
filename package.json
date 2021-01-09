@@ -2,8 +2,13 @@
   "name": "electron-chat",
   "version": "1.0.0",
   "description": "Basic AF chat app :)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lancej1022/electron-chat"
+  },
   "main": "electron/main.js",
   "scripts": {
+    "lint": "eslint .",
     "start": "electron electron/main.js",
     "watch": "webpack --config webpack.common.js --watch",
     "build": "webpack --config webpack.prod.js",
@@ -42,7 +47,7 @@
           "y": 220
         },
         {
-          "x": 810,
+          "x": 430,
           "y": 220,
           "type": "link",
           "path": "/Applications"
@@ -71,9 +76,9 @@
     "babel-loader": "^8.2.2",
     "css-loader": "^5.0.1",
     "dotenv-webpack": "^6.0.0",
-    "electron": "^11.1.1",
     "electron-builder": "^22.9.1",
     "electron-reloader": "^1.1.0",
+    "eslint": "^7.17.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^7.1.0",
     "eslint-plugin-import": "^2.22.1",
@@ -89,8 +94,11 @@
     "webpack-cli": "^4.3.0"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.2",
+    "@material-ui/icons": "^4.11.2",
     "@reduxjs/toolkit": "^1.5.0",
     "bootstrap": "^4.5.2",
+    "electron": "^11.1.1",
     "firebase": "^8.2.1",
     "moment": "^2.29.1",
     "react": "^17.0.1",

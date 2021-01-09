@@ -1,6 +1,8 @@
 const { app, BrowserWindow, Notification, ipcMain, Menu, Tray } = require('electron');
 const path = require('path');
 
+const createTemplate = require('../utils/Menu');
+
 const dockIcon = path.join(__dirname, 'assets', 'images', 'react_app_logo.png');
 const trayIcon = path.join(__dirname, 'assets', 'images', 'react_icon.png');
 
@@ -47,6 +49,7 @@ if (isProd === false) {
   // require('electron-reload')(__dirname, {
   //   electron: path.join(process.cwd(), 'node_modules', '.bin', 'electron'), // specify path to electron
   // });
+  // eslint-disable-next-line global-require, import/no-extraneous-dependencies
   require('electron-reloader')(module, {
     debug: true,
     watchRenderer: true,
@@ -60,7 +63,8 @@ if (process.platform === 'darwin') {
 let tray = null;
 app.whenReady().then(() => {
   // build the menu to display @ top of screen on Mac / top of window on Windows
-  const template = require('../utils/Menu').createTemplate(app);
+  // const template = require('../utils/Menu').createTemplate(app);
+  const template = createTemplate(app);
   const menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
 
@@ -80,7 +84,7 @@ app.whenReady().then(() => {
 });
 
 ipcMain.on('notify', (e, str) => {
-  new Notification({ title: 'Notification', body: str });
+  Notification({ title: 'Notification', body: str });
 });
 
 ipcMain.on('quit', () => {});

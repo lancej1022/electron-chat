@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
+import { formatPastTime } from '../../utils/timestamp';
 
 export const ChatMessagesList = ({ messages = [], innerRef }) => {
   const user = useSelector(({ auth }) => auth.user);
@@ -23,7 +24,7 @@ export const ChatMessagesList = ({ messages = [], innerRef }) => {
               </div>
               <div className="chat-text-wrapper">
                 <span className="chat-text">{m.content}</span>
-                <span className="chat-spacer"></span>
+                <span className="chat-spacer" />
                 <div className="chat-hour">{formatPastTime(m.timestamp)}</div>
               </div>
             </li>
@@ -33,3 +34,5 @@ export const ChatMessagesList = ({ messages = [], innerRef }) => {
     </div>
   );
 };
+
+export default ChatMessagesList;

@@ -7,7 +7,6 @@ import { Chat } from './views/chat';
 import { Settings } from './views/settings';
 import { Welcome } from './views/welcome';
 import ChatCreate from './views/chatCreate';
-import { Navbar } from './components/Navbar';
 import LoadingView from './components/LoadingView';
 
 import { listenToAuthChanges } from './redux/actions/auth';
