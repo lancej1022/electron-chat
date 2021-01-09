@@ -1,0 +1,1 @@
+export { ViewTitle } from './ViewTitle';

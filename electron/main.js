@@ -1,15 +1,35 @@
-const { app, BrowserWindow, Notification, ipcMain } = require('electron');
+const { app, BrowserWindow, Notification, ipcMain, Menu, Tray } = require('electron');
 const path = require('path');
+
+const dockIcon = path.join(__dirname, 'assets', 'images', 'react_app_logo.png');
+const trayIcon = path.join(__dirname, 'assets', 'images', 'react_icon.png');
 
 const isProd = app.isPackaged; // if isPackaged returns true, we're running a production build. If false, we must be in dev.
 
-let win = {};
+const createSplashScreen = () => {
+  const window = new BrowserWindow({
+    width: 400,
+    height: 200,
+    backgroundColor: '#6e707e',
+    frame: false,
+    transparent: true,
+    webPreferences: {
+      contextIsolation: true,
+      nodeIntegration: false,
+      worldSafeExecuteJavaScript: true,
+    },
+  });
+  window.loadFile('splash.html');
+  return window;
+};
 
+let win = {};
 const createWindow = () => {
   win = new BrowserWindow({
     width: 1200,
     height: 800,
-    backgroundColor: 'white',
+    backgroundColor: '#6e707e',
+    show: false, // hide the window while it loads, and we reveal it within the app.whenReady() logic
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false, // block access to Node methods in the client
@@ -33,10 +53,30 @@ if (isProd === false) {
   });
 }
 
+if (process.platform === 'darwin') {
+  app.dock.setIcon(dockIcon);
+}
+
+let tray = null;
 app.whenReady().then(() => {
-  createWindow();
-  const notification = new Notification({ title: 'Yo', body: 'My super cool notification' }); // creates a native OS notification using Electron Modules
-  notification.show();
+  // build the menu to display @ top of screen on Mac / top of window on Windows
+  const template = require('../utils/Menu').createTemplate(app);
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
+
+  tray = new Tray(trayIcon);
+  tray.setContextMenu(menu); // we could make a different menu for the tray if we want, but we'll just reuse the OS menu for now
+
+  const splash = createSplashScreen();
+  const mainApp = createWindow();
+
+  mainApp.once('ready-to-show', () => {
+    splash.destroy();
+    mainApp.show();
+  });
+
+  // const notification = new Notification({ title: 'Yo', body: 'My super cool notification' }); // creates a native OS notification using Electron Modules
+  // notification.show();
 });
 
 ipcMain.on('notify', (e, str) => {

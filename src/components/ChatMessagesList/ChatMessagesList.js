@@ -1,59 +1,34 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useSelector } from 'react-redux';
 
-export const ChatMessagesList = () => {
+export const ChatMessagesList = ({ messages = [], innerRef }) => {
+  const user = useSelector(({ auth }) => auth.user);
+
+  const isAuthorClassname = useCallback(
+    (message) => {
+      return message?.author.uid === user.uid ? 'chat-right' : 'chat-left';
+    },
+    [user]
+  );
+
   return (
     <div className="chat-container">
-      <ul className="chat-box chatContainerScroll">
-        <li className="chat-left">
-          <div className="chat-avatar">
-            <img
-              src="https://www.pinclipart.com/picdir/middle/133-1331433_free-user-avatar-icons-happy-flat-design-png.png"
-              alt="Retail Admin"
-            />
-            <div className="chat-name">Test User 1</div>
-          </div>
-          <div className="chat-text-wrapper">
-            <span className="chat-text">Some message 1</span>
-            <span className="chat-spacer"></span>
-            <div className="chat-hour">5h ago</div>
-          </div>
-        </li>
-        <li className="chat-right">
-          <div className="chat-avatar">
-            <img src="https://i.dlpng.com/static/png/7105396_preview.png" alt="Retail Admin" />
-            <div className="chat-name">Test User 2</div>
-          </div>
-          <div className="chat-text-wrapper">
-            <span className="chat-text">Some message 2</span>
-            <span className="chat-spacer"></span>
-            <div className="chat-hour">5h ago</div>
-          </div>
-        </li>
-        <li className="chat-left">
-          <div className="chat-avatar">
-            <img
-              src="https://www.pinclipart.com/picdir/middle/133-1331433_free-user-avatar-icons-happy-flat-design-png.png"
-              alt="Retail Admin"
-            />
-            <div className="chat-name">Test User 3</div>
-          </div>
-          <div className="chat-text-wrapper">
-            <span className="chat-text">Some message 3</span>
-            <span className="chat-spacer"></span>
-            <div className="chat-hour">5h ago</div>
-          </div>
-        </li>
-        <li className="chat-right">
-          <div className="chat-avatar">
-            <img src="https://i.dlpng.com/static/png/7105396_preview.png" alt="Retail Admin" />
-            <div className="chat-name">Test User 4</div>
-          </div>
-          <div className="chat-text-wrapper">
-            <span className="chat-text">Some message 4</span>
-            <span className="chat-spacer"></span>
-            <div className="chat-hour">5h ago</div>
-          </div>
-        </li>
+      <ul ref={innerRef} className="chat-box chatContainerScroll">
+        {messages.map((m) => {
+          return (
+            <li key={m.id} className={isAuthorClassname(m)}>
+              <div className="chat-avatar">
+                <img src={m.author?.avatar} alt="Retail Admin" />
+                <div className="chat-name">Test User 1</div>
+              </div>
+              <div className="chat-text-wrapper">
+                <span className="chat-text">{m.content}</span>
+                <span className="chat-spacer"></span>
+                <div className="chat-hour">{formatPastTime(m.timestamp)}</div>
+              </div>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

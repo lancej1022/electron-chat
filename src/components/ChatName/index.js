@@ -1,1 +1,0 @@
-export { ChatName } from './ChatName';
